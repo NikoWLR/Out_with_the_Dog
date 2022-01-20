@@ -1,1 +1,1 @@
-##runs a simple https server. Just run 
+##runs a simple https server.

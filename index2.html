@@ -11,20 +11,26 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" 
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js/L.Geoserver.js"></script>
 
 </head>
 
 <body>
-    <div class="container">
+    <div class="container"> <!--Flexbox container*-->
     
-
     <div id ="map">
-
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
     <script> 
-    ///Defines the map itself 
+
+    //Defines the map itself 
+    
+    
+    
     var map = L.map('map').setView([60.4518, 22.2666], 13);
+
+    
 
     //defines the map tiles
     var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -36,6 +42,7 @@
     zoomOffset: -1
 }).addTo(map);
 
+var wfsLayer = L.Geoserver.wfs("https://opaskartta.turku.fi/TeklaOGCWeb/WFS.ashx", {layers: "kanta:Polku",});wfsLayer.addTo(map);
 //Defines the markers for the dog parks. Currently not working !#TODO#!: Find out why and fix
 var DogIcon = L.icon({
     iconUrl: 'doggie.png',
@@ -55,6 +62,8 @@ var marker = L.marker([60.4518, 22.2666], {icon: DogIcon}).addTo(map).bindPopup(
 </script>   
 
     </div>
+
+    <!-- menu for choosing nearby parks, heavy WIP-->
 
     <div id="parkmenu">
         <h1>Park menu here?</h1>

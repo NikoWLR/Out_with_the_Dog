@@ -3,24 +3,25 @@
 
 .container {
     display: flex; /* or inline-flex */
-    background-color: blue;
+    background-color:none;
     height: 100%;
     width: auto;
   }
 
 #map {
-
     background-color: aquamarine;
     width: 70%;
     height: 100%;
-
+    border-radius: 25px;
 }
 
 #parkmenu {
-    background-color: rgb(96, 119, 75);
+    background-color: lightgrey;
     height: 100%;
     width: 30%;
     align-self: right;
     margin-left: 2%;
     text-align: center;
+    border-radius: 25px;
+    text-shadow: 20px, 20px;
 }

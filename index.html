@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" 
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
     </script>
@@ -14,7 +15,10 @@
 </head>
 
 <body>
-    <div id ="map" style="width: 70%; height: 70%; align-self: right;">
+    <div class="container">
+    
+
+    <div id ="map">
 
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
@@ -51,6 +55,11 @@ var marker = L.marker([60.4518, 22.2666], {icon: DogIcon}).addTo(map).bindPopup(
 </script>   
 
     </div>
+
+    <div id="parkmenu">
+        <h1>Park menu here?</h1>
+    </div>
+</div>
 </body>
 <footer></footer>
 </html>

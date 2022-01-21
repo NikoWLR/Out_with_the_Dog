@@ -1,0 +1,26 @@
+/*CSS for Divs and other non-leaflet stuff*/
+
+
+.container {
+    display: flex; /* or inline-flex */
+    background-color: blue;
+    height: 100%;
+    width: auto;
+  }
+
+#map {
+
+    background-color: aquamarine;
+    width: 70%;
+    height: 100%;
+
+}
+
+#parkmenu {
+    background-color: rgb(96, 119, 75);
+    height: 100%;
+    width: 30%;
+    align-self: right;
+    margin-left: 2%;
+    text-align: center;
+}

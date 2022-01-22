@@ -1,0 +1,9 @@
+version = 2.20.1
+git revision = 6a644b86e10fedce78fadfe824a7efd93dc883ce
+git branch = origin/main
+build date = 18-Nov-2021 15:18
+geotools version = 26.1
+geotools revision = 96fbeb558ff4e7e5cb0444b61788173c8400a7cf
+geowebcache version = 1.20.0
+geowebcache revision = 1.20.x/d7c7f26f15eca11d49f4d1fca579f123fde6974
+hudson build = -1

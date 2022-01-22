@@ -42,7 +42,36 @@
     zoomOffset: -1
 }).addTo(map);
 
-var wfsLayer = L.Geoserver.wfs("https://opaskartta.turku.fi/TeklaOGCWeb/WFS.ashx", {layers: "kanta:Polku",});wfsLayer.addTo(map);
+$.ajax('http://localhost:8080/geoserver/wfs',{
+  type: 'GET',
+  data: {
+    service: 'WFS',
+    version: '1.1.0',
+    request: 'GetFeature',
+    typename: 'avoindata:GIS_Kanta_Polku',
+    //CQL_FILTER: "column='demo'",
+    srsname: 'EPSG:4326',
+    outputFormat: 'text/javascript',
+    },
+  dataType: 'jsonp',
+  jsonpCallback:'callback:handleJson',
+  jsonp:'format_options'
+ });
+  //Geojson style file
+  var myStyle = {
+    'color': 'red'
+  }
+// the ajax callback function
+function handleJson(data) {
+    selectedArea = L.geoJson(data, {
+      style: myStyle,
+      //onEachFeature: function(feature, layer) {
+        //layer.bindPopup(`Name: ${feature.properties.name_of_your_property}`)
+      //}
+    }).addTo(map);
+  map.fitBounds(selectedArea.getBounds());
+}
+
 //Defines the markers for the dog parks. Currently not working !#TODO#!: Find out why and fix
 var DogIcon = L.icon({
     iconUrl: 'doggie.png',

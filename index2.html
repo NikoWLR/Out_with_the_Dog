@@ -18,19 +18,48 @@
 
 <body>
     <div class="container"> <!--Flexbox container*-->
-    
-    <div id ="map">
+
+    <div id="parkmenu", class="example">     <!-- menu for choosing nearby parks, heavy WIP-->
+      <h1>Park menu</h1>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <p>Park data go here</p>
+      </div>
+    </div>
+
+    <div id ="map"> <!--Contains the map itself-->
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
     <script> 
 
     //Defines the map itself 
-    
-
-    
     var map = L.map('map').setView([60.4518, 22.2666], 13);
-
-    
 
     //defines the map tiles
     var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -41,6 +70,8 @@
     tileSize: 512,
     zoomOffset: -1
 }).addTo(map);
+
+//Compatability code for GeoServer
 
 $.ajax('http://localhost:8080/geoserver/wfs',{
   type: 'GET',
@@ -72,7 +103,7 @@ function handleJson(data) {
   map.fitBounds(selectedArea.getBounds());
 }
 
-//Defines the markers for the dog parks. Currently not working !#TODO#!: Find out why and fix
+//Defines the markers for the dog parks.
 var DogIcon = L.icon({
     iconUrl: 'Icons/DogPark_2.png',
     shadowUrl: '',
@@ -92,11 +123,7 @@ var marker = L.marker([60.4455, 22.2997], {icon: DogIcon}).addTo(map).bindPopup(
 
     </div>
 
-    <!-- menu for choosing nearby parks, heavy WIP-->
 
-    <div id="parkmenu">
-        <h1>Park menu here?</h1>
-    </div>
 </div>
 </body>
 <footer></footer>

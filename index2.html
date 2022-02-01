@@ -1,3 +1,4 @@
+
 <html>
 
 <head>
@@ -12,7 +13,9 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js/L.Geoserver.js"></script>
+    <script src="Plugins/leaflet.ajax.min.js" type="text/javascript" ></script>
+
+    <script src="GeoJson/Koirapuistot.geojson.js"></script>
 
 </head>
 
@@ -22,8 +25,8 @@
     <div id="parkmenu", class="example">     <!-- menu for choosing nearby parks, heavy WIP-->
       <h1>Park menu</h1>
       <div id ="parkbutton">
-        <div id = "parkimage">
 
+        <div id = "parkimage">
         </div>
         <p>Park data go here</p>
       </div>
@@ -71,43 +74,17 @@
     zoomOffset: -1
 }).addTo(map);
 
-//Compatability code for GeoServer
 
-$.ajax('http://localhost:8080/geoserver/wfs',{
-  type: 'GET',
-  data: {
-    service: 'WFS',
-    version: '1.1.0',
-    request: 'GetFeature',
-    typename: ' 	topp:states ',
-    //CQL_FILTER: "column='demo'",
-    srsname: 'EPSG:4326',
-    outputFormat: 'text/javascript',
-    },
-  dataType: 'jsonp',
-  jsonpCallback:'callback:handleJson',
-  jsonp:'format_options'
- });
-  //Geojson style file
-  var myStyle = {
-    'color': 'red'
-  }
-// the ajax callback function
-function handleJson(data) {
-    selectedArea = L.geoJson(data, {
-      style: myStyle,
-      //onEachFeature: function(feature, layer) {
-        //layer.bindPopup(`Name: ${feature.properties.name_of_your_property}`)
-      //}
-    }).addTo(map);
-  map.fitBounds(selectedArea.getBounds());
-}
+//var geojsonLayer = new L.GeoJSON.AJAX('GeoJson/Koirapuistot.geojson')
+//geojsonLayer.addTo(map);
+
+
+
 
 //Defines the markers for the dog parks.
 var DogIcon = L.icon({
     iconUrl: 'Icons/DogPark_2.png',
     shadowUrl: '',
-    
     iconSize:     [28, 55], // size of the icon
     //shadowSize:   [50, 64], // size of the shadow
     iconAnchor:   [13, 55], // point of the icon which will correspond to marker's location
@@ -119,6 +96,15 @@ var DogIcon = L.icon({
 
 //adds the marker to map
 var marker = L.marker([60.4455, 22.2997], {icon: DogIcon}).addTo(map).bindPopup('<b>Kupittaa Dog Park</b><br />Kupittaa Dog park is located here').openPopup();
+
+var doggoparks = new L.GeoJSON(geojsonObject, {
+  pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, DogIcon); // The basic style
+    }
+}).addTo(map)
+
+//var doggoparkmarkers = new L.marker([doggoparks], {icon:DogIcon})
+
 </script>   
 
     </div>

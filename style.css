@@ -22,7 +22,7 @@
     background-color: aquamarine;
     width: 80%;
     height: 100%;
-    border-radius: 25px;
+    /*border-radius: 15px;*/
 }
 
 #parkmenu {
@@ -30,7 +30,7 @@
     height: 100%;
     width: 20%;
     align-self: right;
-    margin-right: 1%;
+    margin-left: 1%;
     text-align: center;
     border-radius: 25px;
     align-items: center;
@@ -55,8 +55,9 @@
     height: 100%;
     width: 25%;
     margin-top: 0%;
+    float: right;
     text-align: center;
     border-radius: 15px;
-    border-top-right-radius:0px;
-    border-bottom-right-radius:0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
 }

@@ -18,44 +18,16 @@
     <script src="GeoJson/Koirapuistot.geojson.js"></script>
     <script src="GeoJson/polut.geojson.js"></script>
 
+    <!--GeoLocation plugin-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
 </head>
 
 <body>
     <div class="container"> <!--Flexbox container*-->
 
-    <div id="parkmenu", class="example">     <!-- menu for choosing nearby parks, heavy WIP-->
-      <h1>Park menu</h1>
-      <div id ="parkbutton">
-
-        <div id = "parkimage">
-        </div>
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-      <div id ="parkbutton">
-        <p>Park data go here</p>
-      </div>
-    </div>
+    
 
     <div id ="map"> <!--Contains the map itself-->
 
@@ -75,13 +47,15 @@
     zoomOffset: -1
 }).addTo(map);
 
-//locates user & focuses view
-//map.locate({setView: true, watch: true, maxZoom: 20});
-//map.once('locationfound', onLocationFound)
+//adds location button
+var lc = L.control.locate().addTo(map);
+// locates user on page load
+//lc.start();
+
 
 //Defines the markers for the dog parks.
 var DogIcon = L.icon({
-    iconUrl: 'Icons/DogPark_2.png',
+    iconUrl: 'Icons/DogPark_1.png',
     shadowUrl: '',
     iconSize:     [28, 55], // size of the icon
     //shadowSize:   [50, 64], // size of the shadow
@@ -106,6 +80,54 @@ var paths = new L.GeoJSON(geojsonPath, {
 
     </div>
 
+    <div id="parkmenu", class="example">     <!-- menu for choosing nearby parks, heavy WIP-->
+      <h1>Park menu</h1>
+      <div id ="parkbutton">
+          <div id = "parkimage">
+          </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+      <div id ="parkbutton">
+        <div id = "parkimage">
+        </div>
+        <p>Park data go here</p>
+      </div>
+    </div>
 
 </div>
 </body>

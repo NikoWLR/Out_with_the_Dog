@@ -1,11 +1,18 @@
 /*CSS for Divs and other non-leaflet stuff*/
 
+body {
+padding: 0;
+margin: 0;
 
+}
 .container {
     display: flex; /* or inline-flex */
     background-color:none;
     height: 100%;
-    width: auto;
+    width: 100%;
+    margin: none;
+    background-color: gray;
+    position: relative;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -19,35 +26,41 @@
   }
 
 #map {
-    background-color: aquamarine;
+    background-color: white;
     width: 80%;
     height: 100%;
     /*border-radius: 15px;*/
+    z-index: 1;
 }
 
 #parkmenu {
-    background-color: lightgrey;
+    background-color: white;
     height: 100%;
     width: 20%;
-    align-self: right;
-    margin-left: 1%;
+    margin-right: 80%;
     text-align: center;
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     align-items: center;
     overflow-x: hidden;
     overflow-y: scroll;
-   
+    box-shadow: -1px 0px 5px gray;
+    float: right;
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 80%;
 }
 
 #parkbutton {
-    background-color: red;
+    background-color: white;
     height: 10%;
     width: 90%;
     margin-top: 5%;
-    text-align: center;
+    text-align: left;
     border-radius: 15px;
- 
+    box-shadow: 0px 1px 5px gray;
     display: inline-block;
+    text-indent: 5%;
 }
 
 #parkimage {
@@ -60,4 +73,15 @@
     border-radius: 15px;
     border-top-left-radius:0px;
     border-bottom-left-radius:0px;
+    background-image: url("Icons/dogplaceholder.jpg");
+    background-size: contain;
+}
+
+#parkbutton:hover {
+  box-shadow: 0px 1px 9px gray;
+  transition: 0.1s
+}
+
+h2 {
+  font-size: 17;
 }

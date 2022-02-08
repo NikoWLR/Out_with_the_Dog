@@ -25,6 +25,10 @@ margin: 0;
     scrollbar-width: none;  /* Firefox */
   }
 
+.clickMe {
+  
+}  
+
 #map {
     background-color: white;
     width: 80%;
@@ -61,6 +65,7 @@ margin: 0;
     box-shadow: 0px 1px 5px gray;
     display: inline-block;
     text-indent: 5%;
+    cursor: pointer;
 }
 
 #parkimage {

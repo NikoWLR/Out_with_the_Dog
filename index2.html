@@ -17,23 +17,44 @@
 
     <script src="GeoJson/Koirapuistot.geojson.js"></script>
     <script src="GeoJson/polut.geojson.js"></script>
+    <script src="GeoJson/digitie.geojson.js"></script>
 
     <!--GeoLocation plugin-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
+    <!--Routing plugin-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 </head>
 
 <body>
     <div class="container"> <!--Flexbox container*-->
-
-    
-
     <div id ="map"> <!--Contains the map itself-->
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
-    <script>
+<script>
 
+  function clickerTest() {
+    map.panTo(new L.LatLng(60.4472761, 22.2968824));
+  }
+
+
+
+//click button to zoom to marker      
+  $('parkbutton').on('click', function(){
+      // parse lat and lng from the divs data attribute
+      var latlng = $(this).data().point.split(',');
+      var lat = latlng[0].trim();
+      var lng = latlng[1].trim();
+      var zoom = 10;
+
+    // set the view
+    map.panTo([lat, lng], zoom);
+  })
+
+  
+//onEachFeature function
   function onEachFeature(feature, layer) {
   var popupContent = "<p>ID: </p>"+feature.properties.Id;
   if (feature.properties && feature.properties.popupContent) {
@@ -41,6 +62,7 @@
   }
   layer.bindPopup(popupContent);
 }
+
     //Defines the map itself 
     var map = L.map('map').setView([60.4518, 22.2666], 12);
 
@@ -54,8 +76,15 @@
     zoomOffset: -1
 }).addTo(map);
 
+L.Routing.control({
+    waypoints: [
+        L.latLng(start),
+        L.latLng(end)
+    ],
+    routeWhileDragging: true
+}).addTo(map);
 //adds location button
-var lc = L.control.locate().addTo(map);
+//var lc = L.control.locate().addTo(map);
 // locates user on page load
 //lc.start();
 
@@ -75,18 +104,32 @@ var DogIcon = L.icon({
 //adds dog parks to map
 var doggoparks = new L.GeoJSON(geojsonObject, {
   pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, {icon:DogIcon}); // The basic style
+      return L.marker(latlng, {icon:DogIcon});
+      return L.point(latlng); // The style
     },  onEachFeature: onEachFeature
     
 }).addTo(map)
 
 //adds paths to map
-var paths = new L.GeoJSON(geojsonPath, {
+var digitie = new L.GeoJSON(digitie, {
 }).addTo(map)
 
-//doggoparks.bindPopup("hello1")
-//map.on('popupopen', function(e) {
-  //map.setView(marker.latLng);
+//add a starting point. TESTING ONLY BC MY GEOLOCATION IS BORKED
+var start = L.point([22.303445, 60.454628]);
+
+//add a end point. TESTING ONLY BC MY GEOLOCATION IS BORKED
+var end = L.point([22.299636, 60.445611]);
+
+
+
+//Pathfinding stuff here. Pray for me for I might need it
+var PathFinder = require('geojson-path-finder'),
+    geojson = require('GeoJson/digitiePathing.geojson');
+
+var pathFinder = new PathFinder(geojson);
+
+var path = pathfinder.findPath(start, end);
+
 
 
 </script>   
@@ -99,12 +142,12 @@ var paths = new L.GeoJSON(geojsonPath, {
 
 <div id="parkmenu", class="example">     <!-- menu for choosing nearby parks, heavy WIP-->
   <h1>Out with the Dog</h1>
-  <div id ="parkbutton">
+  <div id ="parkbutton", onclick = "clickerTest()">
       <div id = "parkimage">
       </div>
     <h2>Kupittaan koirapuisto</h2>
   </div>
-  <div id ="parkbutton">
+  <div id ="parkbutton", onclick="clickerTest()">
     <div id = "parkimage">
     </div>
     <p>Park data go here</p>

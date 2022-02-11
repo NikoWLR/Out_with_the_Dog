@@ -103,6 +103,9 @@ var doggoparks = new L.GeoJSON(geojsonObject, {
     
 }).addTo(map)
 
+var ExampleMarker = L.marker([51.5, -0.09], {icon:DogIcon}).addTo(map); //Esimerkki oman markerin tekemisestä
+
+
 //adds paths to map
 var digitie = new L.GeoJSON(digitie, {
 }).addTo(map)

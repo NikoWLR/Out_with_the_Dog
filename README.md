@@ -4,6 +4,6 @@
 
 ## Installing
 
-* open index.html in your browser of choice (as long as it's not IE)
+* open index2.html in your browser of choice (as long as it's not IE)
 * ????
 * Profit

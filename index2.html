@@ -7,8 +7,13 @@
     <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!--stylesheets for lealfet, site and google fonts-->
+
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Comfortaa">
     <link rel="stylesheet" href="leaflet.css" />
     <link rel="stylesheet" href="style.css" />
+
+    <!--External scripts and plugins #TODO!: Make as local as possible-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" 
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
     </script>
@@ -56,7 +61,7 @@
   
 //onEachFeature function
   function onEachFeature(feature, layer) {
-  var popupContent = "<p>ID: </p>"+feature.properties.Id;
+  var popupContent = "- "+feature.properties.Id +"<br>"+ "- "+feature.properties.Koko;
   if (feature.properties && feature.properties.popupContent) {
     popupContent += feature.properties.popupContent;
   }
@@ -104,6 +109,7 @@ var doggoparks = new L.GeoJSON(geojsonObject, {
 }).addTo(map)
 
 var ExampleMarker = L.marker([51.5, -0.09], {icon:DogIcon}).addTo(map); //Esimerkki oman markerin tekemisestä
+
 
 
 //adds paths to map

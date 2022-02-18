@@ -7,3 +7,7 @@
 * open index2.html in your browser of choice (as long as it's not IE)
 * ????
 * Profit
+
+## Using Out with the Dog
+
+* TBC when stuff actually works

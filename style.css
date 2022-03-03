@@ -89,6 +89,9 @@ margin: 0;
 
 h2 {
   font-size: 17;
+  font-family:'Quicksand', 'Arial Narrow', Arial, sans-serif ;
+  font-weight: normal;
+  font-style: normal;
 }
 
 h1 {
@@ -97,4 +100,32 @@ font-family:'Comfortaa', Arial, sans-serif;
 font-weight: normal;
 font-style: normal;
 
+}
+
+p {
+
+  font-family:'Comfortaa', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: small;
+  
+  }
+
+  .map {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.results {
+    background-color: white;
+    opacity: 0.8;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 320px;
+    height: 480px;
+    overflow-y: scroll;
 }

@@ -10,6 +10,7 @@
 <!--stylesheets for lealfet, site and google fonts-->
 
     <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Comfortaa">
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Quicksand">
     <link rel="stylesheet" href="leaflet.css" />
     <link rel="stylesheet" href="style.css" />
 
@@ -25,17 +26,21 @@
     <script src="GeoJson/digitie.geojson.js"></script>
 
     <!--GeoLocation plugin-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-
+    <link rel="stylesheet" href="routing/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="index.css" />
     <!--Routing plugin-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 </head>
 
 <body>
     <div class="container"> <!--Flexbox container*-->
     <div id ="map"> <!--Contains the map itself-->
+      <!--Scripts for the routing engine-->
+      <script src="routing/dist/leaflet-routing-machine.js"></script>
+      <script src="routing/examples/Control.Geocoder.js"></script>
+      <script src="routing/examples/config.js"></script>
+      <script src="routing/examples/"></script>
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
 <script>
@@ -110,11 +115,18 @@ var doggoparks = new L.GeoJSON(geojsonObject, {
 
 var ExampleMarker = L.marker([51.5, -0.09], {icon:DogIcon}).addTo(map); //Esimerkki oman markerin tekemisestä
 
+var ExampleMarker = L.marker([60.425599 ,22.0972503], {icon:DogIcon}).addTo(map); // Saarronniemen koiraranta
+var ExampleMarker = L.marker([60.425766,22.096746], {icon:DogIcon}).addTo(map); // Saarronniemen koirapuisto 
+var ExampleMarker = L.marker([60.4203257,22.2508475], {icon:DogIcon}).addTo(map); //  Uittamon koiraranta 
 
-
-//adds paths to map
+//adds roads to map
 var digitie = new L.GeoJSON(digitie, {
 }).addTo(map)
+
+//adds paths to map
+var kupittaaPolut = new L.GeoJSON(kupittaaPolut, {
+}).addTo(map)
+
 
 //add a starting point. TESTING ONLY BC MY GEOLOCATION IS BORKED
 var start = L.point([22.303445, 60.454628]);
@@ -124,13 +136,26 @@ var end = L.point([22.299636, 60.445611]);
 
 
 
-//Pathfinding stuff here. Pray for me for I might need it
-var PathFinder = require('geojson-path-finder'),
-    geojson = require('GeoJson/digitiePathing.geojson');
+//Pathfinding stuff here. Pray for me for I will need it
+var control = L.Routing.control(L.extend(window.lrmConfig, {
+	waypoints: [
+		L.latLng(60.425599, 22.0972503),
+		L.latLng(60.425766, 22.096746)
+	],
+	geocoder: L.Control.Geocoder.nominatim(),
+	routeWhileDragging: true,
+	reverseWaypoints: true,
+	showAlternatives: true,
+	altLineOptions: {
+		styles: [
+			{color: 'black', opacity: 0.15, weight: 9},
+			{color: 'white', opacity: 0.8, weight: 6},
+			{color: 'blue', opacity: 0.5, weight: 2}
+		]
+	}
+})).addTo(map);
 
-var pathFinder = new PathFinder(geojson);
-
-var path = pathfinder.findPath(start, end);
+L.Routing.errorControl(control).addTo(map);
 
 
 
@@ -148,47 +173,103 @@ var path = pathfinder.findPath(start, end);
       <div id = "parkimage">
       </div>
     <h2>Kupittaan koirapuisto</h2>
+    <p>2km from location</p>
   </div>
   <div id ="parkbutton", onclick="clickerTest()">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Hirvensalon koirapuisto</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Härkähaan koira-aitaus</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Piikkiön koirapuisto</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Iso-Heikkilän koira-aitaus</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Lausteen Koirapuisto</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Nummenrannan koira-aitaus</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>Marjavuoren koira-aitaus</h2>
   </div>
   <div id ="parkbutton">
     <div id = "parkimage">
     </div>
-    <p>Park data go here</p>
+    <h2>LRpuiston koira-aitaus</h2>
   </div>
+  <div id ="parkbutton">
+    <div id = "parkimage">
+    </div>
+    <h2>Park data go here</h2>
+  </div>
+  <div id ="parkbutton", onclick = "clickerTest()">
+    <div id = "parkimage">
+    </div>
+  <h2>Kupittaan koirapuisto</h2>
+</div>
+<div id ="parkbutton", onclick="clickerTest()">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
+<div id ="parkbutton">
+  <div id = "parkimage">
+  </div>
+  <h2>Park data go here</h2>
+</div>
 </div>
 </body>
 <footer></footer>

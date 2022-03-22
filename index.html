@@ -25,11 +25,11 @@
     <script src="GeoJson/polut.geojson.js"></script>
     <script src="GeoJson/digitie.geojson.js"></script>
 
-    <!--GeoLocation plugin-->
+    <!--GeoLocation plugin css-->
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="routing/dist/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="index.css" />
-    <!--Routing plugin-->
+    <!--Routing plugin css-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 </head>
 
@@ -42,9 +42,12 @@
       <script src="routing/examples/config.js"></script>
       <script src="routing/examples/"></script>
 
-<!--Start of the JavaScript. Pity thee who dare enter-->        
-<script>
+      <script src="require.js"></script>
 
+<!--Start of the JavaScript. Pity thee who dare enter-->        
+<script src="bundle.js"></script>
+
+<script>
   function clickerTest() {
     map.panTo(new L.LatLng(60.4472761, 22.2968824));
   }
@@ -136,6 +139,7 @@ var end = L.point([22.299636, 60.445611]);
 
 
 
+
 //Pathfinding stuff here. Pray for me for I will need it
 var control = L.Routing.control(L.extend(window.lrmConfig, {
 	waypoints: [
@@ -157,7 +161,8 @@ var control = L.Routing.control(L.extend(window.lrmConfig, {
 
 L.Routing.errorControl(control).addTo(map);
 
-
+var pathFinder = new PathFinder(geojson, { precision: 1e-3 });
+var path = pathFinder.findPath(start, end);
 
 </script>   
 

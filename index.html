@@ -20,6 +20,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="Plugins/leaflet.ajax.min.js" type="text/javascript" ></script>
+    <script src="routing/dist/leaflet-routing-machine.js"></script>
 
     <script src="GeoJson/Koirapuistot.geojson.js"></script>
     <script src="GeoJson/polut.geojson.js"></script>
@@ -36,8 +37,10 @@
 <body>
     <div class="container"> <!--Flexbox container*-->
     <div id ="map"> <!--Contains the map itself-->
+
       <!--Scripts for the routing engine-->
       <script src="routing/dist/leaflet-routing-machine.js"></script>
+      <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
       <script src="routing/examples/Control.Geocoder.js"></script>
       <script src="routing/examples/config.js"></script>
       <script src="routing/examples/"></script>
@@ -45,9 +48,52 @@
       <script src="require.js"></script>
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
-<script src="bundle.js"></script>
+
 
 <script>
+
+//Definition for L.Routing because it doesn't want to read it otherwise
+
+L.routing = {
+    control: function(options) { return new Control(options); },
+    itinerary: function(options) {
+        return Itinerary(options);
+    },
+    line: function(route, options) {
+        return new Line(route, options);
+    },
+    plan: function(waypoints, options) {
+        return new Plan(waypoints, options);
+    },
+    waypoint: function(latLng, name, options) {
+        return new Waypoint(latLng, name, options);
+    },
+    osrmv1: function(options) {
+        return new OSRMv1(options);
+    },
+    localization: function(options) {
+        return new Localization(options);
+    },
+    formatter: function(options) {
+        return new Formatter(options);
+    },
+    geocoderElement: function(wp, i, nWps, plan) {
+        return new L.Routing.GeocoderElement(wp, i, nWps, plan);
+    },
+    itineraryBuilder: function(options) {
+        return new ItineraryBuilder(options);
+    },
+    mapbox: function(accessToken, options) {
+        return new Mapbox(accessToken, options);
+    },
+    errorControl: function(routingControl, options) {
+        return new ErrorControl(routingControl, options);
+    },
+    autocomplete: function(elem, callback, context, options) {
+        return new Autocomplete(elem, callback, context, options);
+    }
+};
+
   function clickerTest() {
     map.panTo(new L.LatLng(60.4472761, 22.2968824));
   }
@@ -67,7 +113,7 @@
   })
 
   
-//onEachFeature function
+//onEachFeature function for the dog park data
   function onEachFeature(feature, layer) {
   var popupContent = "- "+feature.properties.Id +"<br>"+ "- "+feature.properties.Koko;
   if (feature.properties && feature.properties.popupContent) {
@@ -77,10 +123,10 @@
 }
 
     //Defines the map itself 
-    var map = L.map('map').setView([60.4518, 22.2666], 12);
+  var map = L.map('map').setView([60.4518, 22.2666], 12);
 
     //defines the map tiles
-    var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -93,8 +139,6 @@
 //var lc = L.control.locate().addTo(map);
 // locates user on page load
 //lc.start();
-
-
 
 //Defines the markers for the dog parks.
 var DogIcon = L.icon({
@@ -116,8 +160,8 @@ var doggoparks = new L.GeoJSON(geojsonObject, {
     
 }).addTo(map)
 
+//Custom markers by Niclas (Dog beaches etc)
 var ExampleMarker = L.marker([51.5, -0.09], {icon:DogIcon}).addTo(map); //Esimerkki oman markerin tekemisestä
-
 var ExampleMarker = L.marker([60.425599 ,22.0972503], {icon:DogIcon}).addTo(map); // Saarronniemen koiraranta
 var ExampleMarker = L.marker([60.425766,22.096746], {icon:DogIcon}).addTo(map); // Saarronniemen koirapuisto 
 var ExampleMarker = L.marker([60.4203257,22.2508475], {icon:DogIcon}).addTo(map); //  Uittamon koiraranta 
@@ -140,8 +184,8 @@ var end = L.point([22.299636, 60.445611]);
 
 
 
-//Pathfinding stuff here. Pray for me for I will need it
-var control = L.Routing.control(L.extend(window.lrmConfig, {
+//Leaflet Routing Enfine stuff here.
+var killme = L.Routing.control(L.extend(window.lrmConfig, {
 	waypoints: [
 		L.latLng(60.425599, 22.0972503),
 		L.latLng(60.425766, 22.096746)
@@ -159,10 +203,10 @@ var control = L.Routing.control(L.extend(window.lrmConfig, {
 	}
 })).addTo(map);
 
-L.Routing.errorControl(control).addTo(map);
+//L.Routing.errorControl(control).addTo(map);
 
-var pathFinder = new PathFinder(geojson, { precision: 1e-3 });
-var path = pathFinder.findPath(start, end);
+//var pathFinder = new PathFinder(geojson, { precision: 1e-3 });
+//var path = pathFinder.findPath(start, end);
 
 </script>   
 

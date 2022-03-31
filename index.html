@@ -46,6 +46,8 @@
       <script src="routing/examples/"></script>
       <script src="routing/dist/leaflet-routing-machine.js"></script>
       <script src="require.js"></script>
+      <script src="bundle.js"></script>
+
 
 <!--Start of the JavaScript. Pity thee who dare enter-->        
 
@@ -124,7 +126,7 @@ var ExampleMarker = L.marker([60.4203257,22.2508475], {icon:DogIcon}).addTo(map)
 
 //adds roads to map
 var digitie = new L.GeoJSON(digitie, {
-}).addTo(map)
+})
 
 //adds paths to map
 var kupittaaPolut = new L.GeoJSON(kupittaaPolut, {
@@ -132,11 +134,7 @@ var kupittaaPolut = new L.GeoJSON(kupittaaPolut, {
 
 //Start of GeoJson routing hell
 
-//add a starting point. TESTING ONLY BC MY GEOLOCATION IS BORKED
-var start = L.point([22.303445, 60.454628]);
 
-//add a end point. TESTING ONLY BC MY GEOLOCATION IS BORKED
-var end = L.point([22.299636, 60.445611]);
 
 //End  of GeoJson routing hell
 
@@ -144,8 +142,8 @@ var end = L.point([22.299636, 60.445611]);
 //Leaflet Routing Enfine stuff here.
 var killmenow = L.routing.control(L.extend(window.lrmConfig, {
 	waypoints: [
-		L.latLng(60.425599, 22.0972503),
-		L.latLng(60.425766, 22.096746)
+		L.latLng(60.454628, 22.303445),
+		L.latLng(60.445611, 22.289936)
 	],
 	geocoder: L.Control.Geocoder.nominatim(),
 	routeWhileDragging: true,
@@ -162,15 +160,24 @@ var killmenow = L.routing.control(L.extend(window.lrmConfig, {
 
 L.Routing.errorControl(control).addTo(map);
 
-//var pathFinder = new PathFinder(geojson, { precision: 1e-3 });
-//var path = pathFinder.findPath(start, end);
+//add a starting point. TESTING ONLY BC MY GEOLOCATION IS BORKED
+var start = L.point([60.454628, 22.303445]);
+
+//add a end point. TESTING ONLY BC MY GEOLOCATION IS BORKED
+var end = L.point([60.445611, 22.299636]);
+
+var PathFinder = require('geojson-path-finder'),
+    geojson = require('GeoJson/digitiePathing.json');
+
+var pathFinder = new PathFinder(geojson);
+
+var path = pathFinder.findPath(start, end).addTo(map);
 
 </script> 
 
     
 
-</div>
-
+</div> <!--End of map & body divs-->
 </div>
 
 
